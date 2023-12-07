@@ -1,0 +1,53 @@
+/* background-color: #5e0707; */
+* {
+    padding: 0;
+    margin: 0;
+    font-family: 'Work Sans', sans-serif;
+    /* border: 1px solid black; */
+}
+
+body {
+    background-color: rgb(255, 231, 231);
+}
+
+/* h1, h2, h3, nav {
+    /* border: 1px solid black; 
+} */
+
+img {
+    filter: invert(100%) sepia(0%) saturate(7464%) hue-rotate(91deg) brightness(92%) contrast(96%);
+    margin-right: 10px;
+}
+
+#cabecalho-principal { 
+    place-items: center;    
+    background-color: #5e0707;
+}
+
+/* #titulo-principal {
+    padding: 0.5em;
+    background-color: black;
+} */
+
+#fundo-titulo-principal {
+    background-color: black;
+}
+
+h3#boas-vindas {
+    padding: 0.25em;
+}
+
+#cronometros {
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-danger {  
+    background-color: #5e0707 !important;
+    border-color: #5e0707 !important;
+}
+
+#cartoes-de-projetos {
+    margin: auto;
+}
