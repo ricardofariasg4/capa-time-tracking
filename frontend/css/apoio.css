@@ -19,18 +19,18 @@ img {
     margin-right: 10px;
 }
 
+.topo-principal {
+    border: 1px solid black;
+}
+
 #cabecalho-principal { 
-    place-items: center;    
+    /* border: 1px solid black; */
     background-color: #5e0707;
 }
 
-/* #titulo-principal {
-    padding: 0.5em;
-    background-color: black;
-} */
-
 #fundo-titulo-principal {
-    background-color: black;
+    /* background-color: black; */
+    /* border: 1px solid black; */
 }
 
 h3#boas-vindas {

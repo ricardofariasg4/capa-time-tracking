@@ -19,31 +19,44 @@
 </head>
 
 <body>
-	<header id="cabecalho-principal" class="text-white">
-		
-		<nav class="navbar navbar-expand-lg border-body navbar-dark">
-			<div class="container-fluid">
-				<img src="../logo.svg" alt="logo" width="100em" height="100em" />
-				<h2 calss="ms-auto" id="titulo-principal">CAPA TimeTracking</h2>
-				<h3 class="ms-auto me-auto" id="boas-vindas">Olá, Joaquim!</h3>
-				<button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
-					aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-				<div class="collapse navbar-collapse" id="menuPrincipal">
-					<ul class="navbar-nav ms-auto mb-lg-0 g-10">
-						<li class="nav-item"><a href="./index.html" class="nav-link"><span class="btn btn-light">
-									<i class="bi bi-clock-history"></i> tempo</span></a></li>
-						<li class="nav-item"><a href="./dados.html" class="nav-link"><span class="btn btn-light">
-									<i class="bi bi-clipboard-data"></i> dados</span></a></li>
-						<li class="nav-item"><a href="./sobre.html" class="nav-link"><span class="btn btn-light">
-									<i class="bi bi-info-circle"></i> sobre</span></a></li>
-					</ul>
+	<header>
+		<div id="cabecalho-principal" class="container-fluid text-white">
+			<center>
+				<img class="d-md-inline-block d-none" src="../logo.svg" alt="logo" width="100em" height="100em" />
+				<h2 id="titulo-principal" class="d-inline-block">CAPA TimeTracking</h2>
+			</center>
+			
+			<div class="row">
+				
+				<!-- Nome do usuario -->
+				<div class="topo-principal col"><h3 class="ms-auto me-auto" id="boas-vindas">Olá, Joaquim!</h3></div>
+				
+				<!-- Menu -->
+				<div class="topo-principal col">
+					<nav class="navbar navbar-expand-lg border-body navbar-dark">
+						<div class="container-fluid">
+							<button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+								aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse" id="menuPrincipal">
+								<ul class="navbar-nav position-relative ms-auto mb-lg-0 g-10">
+									<li class="nav-item"><a href="./index.html" class="nav-link position-absolute start-50"><span class="btn btn-light">
+												<i class="bi bi-clock-history"></i> tempo</span></a></li>
+									<li class="nav-item"><a href="./dados.html" class="nav-link position-absolute start-50"><span class="btn btn-light">
+												<i class="bi bi-clipboard-data"></i> dados</span></a></li>
+									<li class="nav-item"><a href="./sobre.html" class="nav-link position-absolute start-50"><span class="btn btn-light">
+												<i class="bi bi-info-circle"></i> sobre</span></a></li>
+								</ul>
+							</div>
+						</div>
+					</nav>		
 				</div>
+			
 			</div>
-		</nav>
-
+		</div>
 	</header>
+	
 
 	<div class="container-fluid">
 
