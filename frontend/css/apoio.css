@@ -19,6 +19,14 @@ img {
     margin-right: 10px;
 }
 
+#logotipo-topo {
+    
+    height: fit-content;
+    
+    border-radius: 0 0 10px 10px;
+    background-color: black;
+}
+
 .topo-principal {
     border: 1px solid black;
 }
