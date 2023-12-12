@@ -97,11 +97,16 @@ function criarSecaoCronometro ()
 
     // Configuração geral da secao de cronometro
     divCronometro.setAttribute('id', 'definicao-projeto')
-    divCronometro.setAttribute('class', 'row input-group')
+    divCronometro.setAttribute('class', 'row mx-auto input-group')
     inputCronometro.setAttribute('id', 'input-projeto')
     inputCronometro.setAttribute('type', 'text')
     inputCronometro.setAttribute('class', 'col-8 col-md-6 col-lg-9 form-control form-control-lg')
     inputCronometro.setAttribute('placeholder', 'Qual o projeto de hoje?')
+
+    // O cronometro
+    spanCronometro.setAttribute('id', 'cronometro-texto')
+    spanCronometro.setAttribute('class', 'col-2 col-md-2 col-lg-1 input-group-text justify-content-center')
+    spanCronometro.innerText = '00:00:00'
 
     // Botão de iniciar e encerrar em texto
     botaoPlayTexto.setAttribute('id', 'botao-play-texto')
@@ -122,11 +127,6 @@ function criarSecaoCronometro ()
     
     botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
     botaoStopIcone.innerHTML = '<i class="bi bi-stop-fill"></i>'
-
-    // O cronometro
-    spanCronometro.setAttribute('id', 'cronometro-texto')
-    spanCronometro.setAttribute('class', 'col-2 col-md-2 col-lg-1 input-group-text justify-content-center')
-    spanCronometro.innerText = '00:00:00'
 
     divCronometro.appendChild(inputCronometro)
     divCronometro.appendChild(spanCronometro)
