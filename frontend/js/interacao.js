@@ -1,6 +1,6 @@
-const SEGUNDO = 1000;
-const MINUTO = SEGUNDO * 60;
-const HORA = MINUTO * 60;
+const SEGUNDO = 1000
+const MINUTO = SEGUNDO * 60
+const HORA = MINUTO * 60
 
 const tempo = {
     horas: 0,
@@ -8,11 +8,15 @@ const tempo = {
     segundos: 0
 }
 
-const projeto = {
-    atividade: null,
+const cardObj = {
+    tituloAtividade: null,
+    descricaoAtividade: null,
+    humorMedio: null, 
+    status: null,
+    categoriaProjeto: null,
+    data: null,
     tempoDespendido: null
 }
-
 
 // Funções abaixo
 function passaTempo () 
@@ -28,7 +32,7 @@ function passaTempo ()
     }
     
     tempo.segundos++
-    document.getElementById('cronometro-texto').innerText = `${tempo.horas.toString().padStart(2, '0')}:${tempo.minutos.toString().padStart(2, '0')}:${tempo.segundos.toString().padStart(2, '0')}`;
+    document.getElementById('cronometro-texto').innerText = `${tempo.horas.toString().padStart(2, '0')}:${tempo.minutos.toString().padStart(2, '0')}:${tempo.segundos.toString().padStart(2, '0')}`
 }
 
 function criarCard () 
@@ -40,10 +44,6 @@ function criarCard ()
     //         <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
     //     </div>
     // </div>
-
-    tempo.horas = parseInt(projeto.tempoDespendido.split(':')[0])
-    tempo.minutos = parseInt(projeto.tempoDespendido.split(':')[1])
-    tempo.segundos = parseInt(projeto.tempoDespendido.split(':')[2])
 
     let divCol = document.createElement('div')
     let card = document.createElement('div')
@@ -61,8 +61,8 @@ function criarCard ()
     cardTitle.setAttribute('class', 'card-title')
     cardText.setAttribute('class', 'card-text')
     
-    cardHeader.innerText = 'Tempo despendido: '+tempo.horas.toString().padStart(2, '0')+':'+tempo.minutos.toString().padStart(2, '0')+':'+tempo.segundos.toString().padStart(2, '0')
-    cardTitle.innerText = projeto.atividade
+    cardHeader.innerText = 'Tempo despendido: '+cardObj.tempoDespendido
+    cardTitle.innerText = cardObj.tituloAtividade
 
     cardText.innerText = 'Some quick example text to build on the card title and make up the bulk of the card\'s content.'
     cardBody.appendChild(cardTitle)
@@ -73,10 +73,116 @@ function criarCard ()
 
     let sectionCards = document.getElementById('cartoes-de-projetos')
     sectionCards.appendChild(divCol)
+}
 
-    tempo.horas = 0
-    tempo.minutos = 0
-    tempo.segundos = 0
+function capturaInfoComplementar ()
+{
+    let secaoInfoComplementar = document.getElementById('secao-info-complementar')
+    let divResumo = document.createElement('div')
+    let labelResumo = document.createElement('label')
+    let textAreaResumo = document.createElement('textarea')
+
+    divResumo.setAttribute('id', 'div-resumo')
+    divResumo.setAttribute('class', 'col-12 mb-3')
+    
+    labelResumo.setAttribute('id', 'label-resumo')
+    labelResumo.setAttribute('class', 'form-label')
+    labelResumo.innerText = 'resumo da atividade:'
+    
+    textAreaResumo.setAttribute('id', 'text-area-resumo')
+    textAreaResumo.setAttribute('class', 'form-control')
+    textAreaResumo.setAttribute('rows', '3')
+
+    divResumo.appendChild(labelResumo)
+    divResumo.appendChild(textAreaResumo)
+
+    secaoInfoComplementar.appendChild(divResumo)
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    let opcoesEmojis = ["🧐 encontre sua reação", "Isso foi divertido 😃", "Um pouco entediante 😑", "Aturei... 🙄", "Vai dar não 😡"]
+
+    let divEmoji = document.createElement('div')
+    let labelEmoji = document.createElement('label')
+    let selectEmoji = document.createElement('select')
+    let opcaoSelecionadaEmoji = document.createElement('option')
+
+    // Configuração da div emoji
+    divEmoji.setAttribute('id', 'div-emoji')
+    divEmoji.setAttribute('class', 'col-12 col-lg-4 mb-3')
+
+    // Configuração label emoji
+    labelEmoji.setAttribute('for', 'seletor-emoji')
+    labelEmoji.setAttribute('class', 'form-label')
+    labelEmoji.innerText = 'como você se sente? *'
+
+    // Configuração do select
+    selectEmoji.setAttribute('id', 'seletor-emoji')
+    selectEmoji.setAttribute('class', 'form-select')
+    selectEmoji.setAttribute('aria-label', 'Encontre sua reação')
+
+    // Configuração da opção selecionada (padrão)
+    opcaoSelecionadaEmoji.value = 0
+    opcaoSelecionadaEmoji.text = opcoesEmojis[0]
+    selectEmoji.appendChild(opcaoSelecionadaEmoji)
+    
+    for (let i=1; i<opcoesEmojis.length; i++)
+    {
+        option = document.createElement('option')
+        option.value = i
+        option.text = opcoesEmojis[i]
+        selectEmoji.appendChild(option)
+    }
+
+    divEmoji.appendChild(labelEmoji)
+    divEmoji.appendChild(selectEmoji)
+    secaoInfoComplementar.appendChild(divEmoji)
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+    // <div class="col-12 col-lg-4 mb-3">
+    //     <label for="seletor-emoji" class="form-label">a qual projeto está atrelado? *</label>
+    //     <select id="seletor-emoji" class="form-select" aria-label="Projeto">
+    //         <option selected>projeto exemplo</option>
+    //         <option value="1">Projeto 1</option>
+    //         <option value="2">Projeto 2</option>
+    //         <option value="3">Projeto 3</option>
+    //         <option value="4">Projeto 4</option>
+    //     </select>	
+    // </div>
+
+    // Captura as opções de projeto do backend
+
+    let divProjeto = document.createElement('div')
+    let labelProjeto = document.createElement('label')
+    let selectProjeto = document.createElement('select')
+    let opcaoSelecionadaProjeto = document.createElement('option')
+
+    // Configuração da div projeto
+    divProjeto.setAttribute('id', 'div-projeto')
+    divProjeto.setAttribute('class', 'col-12 col-lg-4 mb-3')
+
+    // Configuração label projeto
+    labelProjeto.setAttribute('for', 'seletor-projeto')
+    labelProjeto.setAttribute('class', 'form-label')
+    labelProjeto.innerText = 'a qual projeto está atrelado? *'
+
+    // Configuração do select
+    selectProjeto.setAttribute('id', 'seletor-projeto')
+    selectProjeto.setAttribute('class', 'form-select')
+    selectProjeto.setAttribute('aria-label', 'Projetos')
+
+    // Configuração da opção selecionada (padrão)
+    opcaoSelecionadaProjeto.value = 0
+    opcaoSelecionadaProjeto.text = 'Projetos'
+    selectProjeto.appendChild(opcaoSelecionadaProjeto)
+    
+    divProjeto.appendChild(labelProjeto)
+    divProjeto.appendChild(selectProjeto)
+    secaoInfoComplementar.appendChild(divProjeto)
+
+    
+
 }
 
 function criarSecaoCronometro ()
@@ -92,8 +198,6 @@ function criarSecaoCronometro ()
     let botaoPlayIcone = document.createElement('button')
     let botaoStopTexto = document.createElement('button')
     let botaoStopIcone = document.createElement('button')
-    let botaoPauseTexto = document.createElement('button')
-    let botaoPauseIcone = document.createElement('button')
 
     // Configuração geral da secao de cronometro
     divCronometro.setAttribute('id', 'definicao-projeto')
@@ -101,7 +205,7 @@ function criarSecaoCronometro ()
     inputCronometro.setAttribute('id', 'input-projeto')
     inputCronometro.setAttribute('type', 'text')
     inputCronometro.setAttribute('class', 'col-8 col-md-6 col-lg-9 form-control form-control-lg')
-    inputCronometro.setAttribute('placeholder', 'Qual o projeto de hoje?')
+    inputCronometro.setAttribute('placeholder', 'qual o projeto de hoje?')
 
     // O cronometro
     spanCronometro.setAttribute('id', 'cronometro-texto')
@@ -115,8 +219,8 @@ function criarSecaoCronometro ()
     botaoStopTexto.setAttribute('id', 'botao-stop-text')
     botaoStopTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-danger btn-sm')
 
-    botaoPlayTexto.innerHTML = 'Iniciar'
-    botaoStopTexto.innerHTML = 'Encerrar'
+    botaoPlayTexto.innerText = 'iniciar'
+    botaoStopTexto.innerText = 'encerrar'
 
     // Botao de iniciar e encerrar como icone
     botaoPlayIcone.setAttribute('id', 'botao-play-icone')
@@ -138,12 +242,15 @@ function criarSecaoCronometro ()
     let sectionCronometro = document.getElementById('cronometros')
     sectionCronometro.appendChild(divCronometro)
 
-    return sectionCronometro;
+    return sectionCronometro
 }
 
 function adicionarEventos (objInteragido)
 {
-    let areaProjetoPrincipal = document.getElementById('definicao-projeto')
+    const botaoPlayTexto = document.getElementById('botao-play-texto')
+    const botaoPlayIcone = document.getElementById('botao-play-icone')
+    const cronometroTexto = document.getElementById('cronometro-texto')
+    const inputProjeto = document.getElementById('input-projeto')
     let intervalo = null
 
     objInteragido.addEventListener('click', (e) => {
@@ -152,65 +259,75 @@ function adicionarEventos (objInteragido)
         if (objetoClicado)
         {
             let objetoClicadoBaseId = objetoClicado.id.split('-')[1]
-
-            // Tratamento botao play
-            if (objetoClicadoBaseId === 'play')
-            {
-                botaoPlayTexto = document.getElementById('botao-play-texto')
-                botaoPlayIcone = document.getElementById('botao-play-icone')
-                
-                botaoPlayTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-secondary btn-sm')
-                botaoPlayTexto.innerHTML = 'Pausar'
-                
-                botaoPlayIcone.setAttribute('class', 'd-md-none col-1 btn btn-secondary btn-sm')
-                botaoPlayIcone.innerHTML = '<i class="bi bi-pause-fill"></i>'
-
-                botaoPlayTexto.setAttribute('id', 'botao-pause-texto')
-                botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
-                
-                intervalo = setInterval(passaTempo, SEGUNDO)
-                return
-            }
             
-            // Tratamento botao pause
-            if (objetoClicadoBaseId === 'pause')
+            switch (objetoClicadoBaseId) 
             {
-                // console.log('botao-pause-clicado')
-                
-                clearInterval(intervalo)
-                botaoPauseTexto = document.getElementById('botao-pause-texto')
-                botaoPauseIcone = document.getElementById('botao-pause-icone')
+                case 'play':
+                    // Botao de play vira pause
+                    botaoPlayTexto.classList.remove('btn-success')
+                    botaoPlayTexto.classList.add('btn-secondary')
+                    botaoPlayTexto.textContent = 'pausar'
 
-                botaoPlayTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-success btn-sm')
-                botaoPlayTexto.innerHTML = 'Retomar'
-                
-                botaoPlayIcone.setAttribute('class', 'd-md-none col-1 btn btn-success btn-sm')
-                botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
-                
-                botaoPlayTexto.setAttribute('id', 'botao-play-texto')
-                botaoPlayIcone.setAttribute('id', 'botao-play-icone')
-                return
-            }
+                    botaoPlayIcone.classList.remove('btn-success')
+                    botaoPlayIcone.classList.add('btn-secondary')
+                    botaoPlayIcone.innerHTML = '<i class="bi bi-pause-fill"></i>'
 
-            // Tratamento botao stop
-            if (objetoClicadoBaseId === 'stop')
-            {
-                
-                // console.log('botao stop clicado')
+                    botaoPlayTexto.setAttribute('id', 'botao-pause-texto')
+                    botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
 
-                botaoPlayTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-success btn-sm')
-                botaoPlayTexto.innerHTML = 'Iniciar'
+                    intervalo = setInterval(passaTempo, SEGUNDO)
+                    break
                 
-                botaoPlayIcone.setAttribute('class', 'd-md-none col-1 btn btn-success btn-sm')
-                botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
-                return
+                case 'pause':
+                    clearInterval(intervalo)
+                    
+                    botaoPlayTexto.classList.remove('btn-secondary')
+                    botaoPlayTexto.classList.add('btn-success')
+                    
+                    botaoPlayTexto.textContent = 'retomar'
+
+                    botaoPlayIcone.classList.remove('btn-secondary')
+                    botaoPlayIcone.classList.add('btn-success')
+                    botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                    
+                    botaoPlayTexto.setAttribute('id', 'botao-play-texto')
+                    botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                    break
+
+                case 'stop':
+                    // Captura as informacoes de interesse
+                    cardObj.tituloAtividade = inputProjeto.value
+                    cardObj.tempoDespendido = cronometroTexto.textContent
+
+                    console.log(cardObj.tituloAtividade)
+                    console.log(cardObj.tempoDespendido)
+                    
+                    // Limpeza do cronometro
+                    clearInterval(intervalo)
+                    cronometroTexto.innerText = '00:00:00'    
+                    tempo.horas = 0
+                    tempo.minutos = 0
+                    tempo.segundos = 0
+                    
+                    // Restaura o cronometro para configuracoes originais
+                    botaoPlayTexto.setAttribute('id', 'botao-play-texto')
+                    botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                    botaoPlayTexto.classList.remove('btn-secondary')
+                    botaoPlayTexto.classList.add('btn-success')
+                    botaoPlayTexto.textContent = 'iniciar'
+                    botaoPlayIcone.classList.remove('btn-secondary')
+                    botaoPlayIcone.classList.add('btn-success')
+                    botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                    
+                    capturaInfoComplementar()
+
+                    criarCard()
+                    break
             }
         }  
     })
 }
 
 // Verifica se a página está pronta para ser manipulada
-document.addEventListener('DOMContentLoaded', () => {
-    let sectionCronometro = criarSecaoCronometro()
-    adicionarEventos(sectionCronometro)
-})
+let sectionCronometro = criarSecaoCronometro()
+adicionarEventos(sectionCronometro)

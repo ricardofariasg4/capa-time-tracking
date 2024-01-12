@@ -19,22 +19,9 @@ img {
     margin-right: 10px;
 }
 
-.topo-principal {
-    border: 1px solid black;
-}
-
 #cabecalho-principal { 
     /* border: 1px solid black; */
     background-color: #5e0707;
-}
-
-#fundo-titulo-principal {
-    /* background-color: black; */
-    /* border: 1px solid black; */
-}
-
-h3#boas-vindas {
-    padding: 0.25em;
 }
 
 #cronometros {
@@ -48,6 +35,12 @@ h3#boas-vindas {
     border-color: #5e0707 !important;
 }
 
+.btn-danger:hover {
+    background-color: #730e0e !important;
+    border-color: #730e0e !important;
+}
+
 #cartoes-de-projetos {
     margin: auto;
 }
+
