@@ -87,6 +87,7 @@ function capturaInfoComplementar ()
     
     labelResumo.setAttribute('id', 'label-resumo')
     labelResumo.setAttribute('class', 'form-label')
+    labelResumo.setAttribute('for', 'text-area-resumo')
     labelResumo.innerText = 'resumo da atividade:'
     
     textAreaResumo.setAttribute('id', 'text-area-resumo')
@@ -114,6 +115,7 @@ function capturaInfoComplementar ()
     // Configuração label emoji
     labelEmoji.setAttribute('for', 'seletor-emoji')
     labelEmoji.setAttribute('class', 'form-label')
+    labelResumo.setAttribute('for', 'seletor-emoji')
     labelEmoji.innerText = 'como você se sente? *'
 
     // Configuração do select
@@ -164,6 +166,7 @@ function capturaInfoComplementar ()
 
     // Configuração label projeto
     labelProjeto.setAttribute('for', 'seletor-projeto')
+    labelProjeto.setAttribute('id', 'label-projeto')
     labelProjeto.setAttribute('class', 'form-label')
     labelProjeto.innerText = 'a qual projeto está atrelado? *'
 
@@ -181,8 +184,27 @@ function capturaInfoComplementar ()
     divProjeto.appendChild(selectProjeto)
     secaoInfoComplementar.appendChild(divProjeto)
 
-    
+    // Cria botão de salvar ou cancelar
+    let botaoSalvar = document.createElement('button')
+    let botaoCancelar = document.createElement('button')
+    let divBotoesComplementar = document.createElement('div')
 
+    divBotoesComplementar.setAttribute('class', 'container-fluid')
+
+    botaoSalvar.setAttribute('id', 'botao-salvar-complementar')
+    botaoSalvar.setAttribute('class', 'col-6 btn btn-success')
+    botaoSalvar.innerHTML = '<i class="bi bi-check-circle"></i> salvar'
+    
+    botaoCancelar.setAttribute('id', 'botao-cancelar-complementar')
+    botaoCancelar.setAttribute('class', 'col-6 btn btn-danger')
+    botaoCancelar.innerHTML = '<i class="bi bi-x-circle"></i> cancelar'
+
+    divBotoesComplementar.appendChild(botaoSalvar)
+    divBotoesComplementar.appendChild(botaoCancelar)   
+
+    secaoInfoComplementar.appendChild(divBotoesComplementar)
+
+    return secaoInfoComplementar
 }
 
 function criarSecaoCronometro ()
@@ -245,13 +267,36 @@ function criarSecaoCronometro ()
     return sectionCronometro
 }
 
-function adicionarEventos (objInteragido)
+function eventosSecaoComplementar (objInteragido)
+{
+    console.log('flag 2')
+    objInteragido.addEventListener('click', (e) => {
+        console.log('flag 3')
+        let objetoClicado = document.getElementById(e.target.id)
+
+        if (objetoClicado)
+        {
+            let objetoClicadoBaseId = objetoClicado.id.split('-')[1]
+
+            if (objetoClicadoBaseId === 'salvar')
+            {
+                console.log('flag 4')
+                return true
+            }
+                
+        }
+    })
+}
+
+function eventosSecaoCronometro (objInteragido)
 {
     const botaoPlayTexto = document.getElementById('botao-play-texto')
     const botaoPlayIcone = document.getElementById('botao-play-icone')
     const cronometroTexto = document.getElementById('cronometro-texto')
     const inputProjeto = document.getElementById('input-projeto')
     let intervalo = null
+    let secaoComplementar
+    let boolCriarCard = false
 
     objInteragido.addEventListener('click', (e) => {
         let objetoClicado = document.getElementById(e.target.id)
@@ -318,10 +363,25 @@ function adicionarEventos (objInteragido)
                     botaoPlayIcone.classList.remove('btn-secondary')
                     botaoPlayIcone.classList.add('btn-success')
                     botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                    inputProjeto.value = ''
                     
-                    capturaInfoComplementar()
+                    console.log('flag 1')
 
-                    criarCard()
+                    secaoComplementar = capturaInfoComplementar()
+                    
+                    boolCriarCard = eventosSecaoComplementar(secaoComplementar)
+
+                    console.log('flag 5')
+
+                    console.log(boolCriarCard)
+
+                    if (boolCriarCard)
+                    {
+                        console.log('flag 6')
+                        criarCard()
+                    }
+                        
+
                     break
             }
         }  
@@ -330,4 +390,4 @@ function adicionarEventos (objInteragido)
 
 // Verifica se a página está pronta para ser manipulada
 let sectionCronometro = criarSecaoCronometro()
-adicionarEventos(sectionCronometro)
+eventosSecaoCronometro(sectionCronometro)
