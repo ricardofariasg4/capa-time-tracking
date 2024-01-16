@@ -87,6 +87,7 @@ function capturaInfoComplementar ()
     
     labelResumo.setAttribute('id', 'label-resumo')
     labelResumo.setAttribute('class', 'form-label')
+    labelResumo.setAttribute('for', 'text-area-resumo')
     labelResumo.innerText = 'resumo da atividade:'
     
     textAreaResumo.setAttribute('id', 'text-area-resumo')
@@ -114,6 +115,7 @@ function capturaInfoComplementar ()
     // Configuração label emoji
     labelEmoji.setAttribute('for', 'seletor-emoji')
     labelEmoji.setAttribute('class', 'form-label')
+    labelResumo.setAttribute('for', 'seletor-emoji')
     labelEmoji.innerText = 'como você se sente? *'
 
     // Configuração do select
@@ -153,6 +155,7 @@ function capturaInfoComplementar ()
 
     // Configuração label projeto
     labelProjeto.setAttribute('for', 'seletor-projeto')
+    labelProjeto.setAttribute('id', 'label-projeto')
     labelProjeto.setAttribute('class', 'form-label')
     labelProjeto.innerText = 'a qual projeto está atrelado? *'
 
@@ -170,25 +173,32 @@ function capturaInfoComplementar ()
     divProjeto.appendChild(selectProjeto)
     secaoInfoComplementar.appendChild(divProjeto)
 
-    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    // Cria botão de salvar ou cancelar
+    let botaoSalvar = document.createElement('button')
+    let botaoCancelar = document.createElement('button')
+    let divBotoesComplementar = document.createElement('div')
+
+    divBotoesComplementar.setAttribute('class', 'container-fluid')
+
+    botaoSalvar.setAttribute('id', 'botao-salvar-complementar')
+    botaoSalvar.setAttribute('class', 'col-6 btn btn-success')
+    botaoSalvar.innerHTML = '<i class="bi bi-check-circle"></i> salvar'
     
-    // Pensar na terceira opção
+    botaoCancelar.setAttribute('id', 'botao-cancelar-complementar')
+    botaoCancelar.setAttribute('class', 'col-6 btn btn-danger')
+    botaoCancelar.innerHTML = '<i class="bi bi-x-circle"></i> cancelar'
 
-    // <div class="col-12 col-lg-4 mb-3">
-    //     <label for="seletor-emoji" class="form-label">a qual projeto está atrelado? *</label>
-    //     <select id="seletor-emoji" class="form-select" aria-label="Projeto">
-    //         <option selected>projeto exemplo</option>
-    //         <option value="1">Projeto 1</option>
-    //         <option value="2">Projeto 2</option>
-    //         <option value="3">Projeto 3</option>
-    //         <option value="4">Projeto 4</option>
-    //     </select>	
-    // </div>
+    divBotoesComplementar.appendChild(botaoSalvar)
+    divBotoesComplementar.appendChild(botaoCancelar)   
 
+    secaoInfoComplementar.appendChild(divBotoesComplementar)
+
+    return secaoInfoComplementar
 }
 
 function criarSecaoCronometro ()
 {
+    console.log('criarSecaoCronometro')
     let iconeBotaoPause = document.createElement('i')
     iconeBotaoPause.setAttribute('class', 'bi bi-pause-fill')
 
@@ -247,12 +257,26 @@ function criarSecaoCronometro ()
     return sectionCronometro
 }
 
-function adicionarEventos (objInteragido)
+function eventosSecaoCronometroPerformance () 
+{
+    let botaoPlayTxtEvt = document.getElementById('botao-play-texto')   
+    let botaoPlayIcoEvt = document.getElementById('botao-play-icone')
+    let botaoStopTxtEvt = document.getElementById('botao-stop-texto')
+    let botaoStopIcoEvt = document.getElementById('botao-stop-icone')
+
+    botaoPlayTxtEvt.addEventListener('click', acaoPlay())
+    botaoPlayIcoEvt.addEventListener('click', acaoPlay())
+    botaoStopTxtEvt.addEventListener('click', acaoStop())
+    botaoStopIcoEvt.addEventListener('click', acaoStop())
+}
+
+function eventosSecaoCronometro (objInteragido)
 {
     const botaoPlayTexto = document.getElementById('botao-play-texto')
     const botaoPlayIcone = document.getElementById('botao-play-icone')
     const cronometroTexto = document.getElementById('cronometro-texto')
     const inputProjeto = document.getElementById('input-projeto')
+    let secaoComplementar = null
     let intervalo = null
 
     objInteragido.addEventListener('click', (e) => {
@@ -278,6 +302,7 @@ function adicionarEventos (objInteragido)
                     botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
 
                     intervalo = setInterval(passaTempo, SEGUNDO)
+                    console.log('acao do botao play')
                     break
                 
                 case 'pause':
@@ -294,6 +319,7 @@ function adicionarEventos (objInteragido)
                     
                     botaoPlayTexto.setAttribute('id', 'botao-play-texto')
                     botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                    console.log('acao do botao pause')
                     break
 
                 case 'stop':
@@ -320,11 +346,11 @@ function adicionarEventos (objInteragido)
                     botaoPlayIcone.classList.remove('btn-secondary')
                     botaoPlayIcone.classList.add('btn-success')
                     botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                    inputProjeto.value = ''
                     
-                    capturaInfoComplementar()
+                    secaoComplementar = capturaInfoComplementar()
 
                     criarCard()
-                    break
             }
         }  
     })
@@ -332,4 +358,4 @@ function adicionarEventos (objInteragido)
 
 // Verifica se a página está pronta para ser manipulada
 let sectionCronometro = criarSecaoCronometro()
-adicionarEventos(sectionCronometro)
+eventosSecaoCronometro(sectionCronometro)
