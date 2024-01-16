@@ -209,6 +209,7 @@ function capturaInfoComplementar ()
 
 function criarSecaoCronometro ()
 {
+    console.log('criarSecaoCronometro')
     let iconeBotaoPause = document.createElement('i')
     iconeBotaoPause.setAttribute('class', 'bi bi-pause-fill')
 
@@ -267,25 +268,17 @@ function criarSecaoCronometro ()
     return sectionCronometro
 }
 
-function eventosSecaoComplementar (objInteragido)
+function eventosSecaoCronometroPerformance () 
 {
-    console.log('flag 2')
-    objInteragido.addEventListener('click', (e) => {
-        console.log('flag 3')
-        let objetoClicado = document.getElementById(e.target.id)
+    let botaoPlayTxtEvt = document.getElementById('botao-play-texto')   
+    let botaoPlayIcoEvt = document.getElementById('botao-play-icone')
+    let botaoStopTxtEvt = document.getElementById('botao-stop-texto')
+    let botaoStopIcoEvt = document.getElementById('botao-stop-icone')
 
-        if (objetoClicado)
-        {
-            let objetoClicadoBaseId = objetoClicado.id.split('-')[1]
-
-            if (objetoClicadoBaseId === 'salvar')
-            {
-                console.log('flag 4')
-                return true
-            }
-                
-        }
-    })
+    botaoPlayTxtEvt.addEventListener('click', acaoPlay())
+    botaoPlayIcoEvt.addEventListener('click', acaoPlay())
+    botaoStopTxtEvt.addEventListener('click', acaoStop())
+    botaoStopIcoEvt.addEventListener('click', acaoStop())
 }
 
 function eventosSecaoCronometro (objInteragido)
@@ -294,9 +287,8 @@ function eventosSecaoCronometro (objInteragido)
     const botaoPlayIcone = document.getElementById('botao-play-icone')
     const cronometroTexto = document.getElementById('cronometro-texto')
     const inputProjeto = document.getElementById('input-projeto')
+    let secaoComplementar = null
     let intervalo = null
-    let secaoComplementar
-    let boolCriarCard = false
 
     objInteragido.addEventListener('click', (e) => {
         let objetoClicado = document.getElementById(e.target.id)
@@ -321,6 +313,7 @@ function eventosSecaoCronometro (objInteragido)
                     botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
 
                     intervalo = setInterval(passaTempo, SEGUNDO)
+                    console.log('acao do botao play')
                     break
                 
                 case 'pause':
@@ -337,6 +330,7 @@ function eventosSecaoCronometro (objInteragido)
                     
                     botaoPlayTexto.setAttribute('id', 'botao-play-texto')
                     botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                    console.log('acao do botao pause')
                     break
 
                 case 'stop':
@@ -365,24 +359,9 @@ function eventosSecaoCronometro (objInteragido)
                     botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
                     inputProjeto.value = ''
                     
-                    console.log('flag 1')
-
                     secaoComplementar = capturaInfoComplementar()
-                    
-                    boolCriarCard = eventosSecaoComplementar(secaoComplementar)
 
-                    console.log('flag 5')
-
-                    console.log(boolCriarCard)
-
-                    if (boolCriarCard)
-                    {
-                        console.log('flag 6')
-                        criarCard()
-                    }
-                        
-
-                    break
+                    criarCard()
             }
         }  
     })
