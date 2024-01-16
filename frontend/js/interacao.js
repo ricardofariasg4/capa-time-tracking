@@ -140,18 +140,7 @@ function capturaInfoComplementar ()
 
     // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    // <div class="col-12 col-lg-4 mb-3">
-    //     <label for="seletor-emoji" class="form-label">a qual projeto está atrelado? *</label>
-    //     <select id="seletor-emoji" class="form-select" aria-label="Projeto">
-    //         <option selected>projeto exemplo</option>
-    //         <option value="1">Projeto 1</option>
-    //         <option value="2">Projeto 2</option>
-    //         <option value="3">Projeto 3</option>
-    //         <option value="4">Projeto 4</option>
-    //     </select>	
-    // </div>
-
-    // Captura as opções de projeto do backend
+    // Captura as opções de projeto do backend (começar backend)
 
     let divProjeto = document.createElement('div')
     let labelProjeto = document.createElement('label')
@@ -181,7 +170,20 @@ function capturaInfoComplementar ()
     divProjeto.appendChild(selectProjeto)
     secaoInfoComplementar.appendChild(divProjeto)
 
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
+    // Pensar na terceira opção
+
+    // <div class="col-12 col-lg-4 mb-3">
+    //     <label for="seletor-emoji" class="form-label">a qual projeto está atrelado? *</label>
+    //     <select id="seletor-emoji" class="form-select" aria-label="Projeto">
+    //         <option selected>projeto exemplo</option>
+    //         <option value="1">Projeto 1</option>
+    //         <option value="2">Projeto 2</option>
+    //         <option value="3">Projeto 3</option>
+    //         <option value="4">Projeto 4</option>
+    //     </select>	
+    // </div>
 
 }
 
