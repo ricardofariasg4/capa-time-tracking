@@ -182,11 +182,11 @@ function capturaInfoComplementar ()
 
     botaoSalvar.setAttribute('id', 'botao-salvar-complementar')
     botaoSalvar.setAttribute('class', 'col-6 btn btn-success')
-    botaoSalvar.innerHTML = '<i class="bi bi-check-circle"></i> salvar'
+    botaoSalvar.innerHTML = '<i id="i-salvar-icone" class="bi bi-check-circle"></i> salvar'
     
     botaoCancelar.setAttribute('id', 'botao-cancelar-complementar')
     botaoCancelar.setAttribute('class', 'col-6 btn btn-danger')
-    botaoCancelar.innerHTML = '<i class="bi bi-x-circle"></i> cancelar'
+    botaoCancelar.innerHTML = '<i id="i-cancelar-icone" class="bi bi-x-circle"></i> cancelar'
 
     divBotoesComplementar.appendChild(botaoSalvar)
     divBotoesComplementar.appendChild(botaoCancelar)   
@@ -228,7 +228,7 @@ function criarSecaoCronometro ()
     botaoPlayTexto.setAttribute('id', 'botao-play-texto')
     botaoPlayTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-success btn-sm')
     
-    botaoStopTexto.setAttribute('id', 'botao-stop-text')
+    botaoStopTexto.setAttribute('id', 'botao-stop-texto')
     botaoStopTexto.setAttribute('class', 'd-none d-md-block col-md-2 col-lg-1 btn btn-danger btn-sm')
 
     botaoPlayTexto.innerText = 'iniciar'
@@ -241,8 +241,8 @@ function criarSecaoCronometro ()
     botaoStopIcone.setAttribute('id', 'botao-stop-icone')
     botaoStopIcone.setAttribute('class', 'd-md-none col-1 btn btn-danger btn-sm')
     
-    botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
-    botaoStopIcone.innerHTML = '<i class="bi bi-stop-fill"></i>'
+    botaoPlayIcone.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
+    botaoStopIcone.innerHTML = '<i id="i-stop-icone" class="bi bi-stop-fill"></i>'
 
     divCronometro.appendChild(inputCronometro)
     divCronometro.appendChild(spanCronometro)
@@ -255,6 +255,16 @@ function criarSecaoCronometro ()
     sectionCronometro.appendChild(divCronometro)
 
     return sectionCronometro
+}
+
+function acaoPlay ()
+{     
+
+}
+
+function acaoPlay ()
+{     
+
 }
 
 function eventosSecaoCronometroPerformance () 
@@ -270,65 +280,150 @@ function eventosSecaoCronometroPerformance ()
     botaoStopIcoEvt.addEventListener('click', acaoStop())
 }
 
-function eventosSecaoCronometro (objInteragido)
+function alteraEstadoBotao (uso, forma, objetoClicado)
 {
-    const botaoPlayTexto = document.getElementById('botao-play-texto')
-    const botaoPlayIcone = document.getElementById('botao-play-icone')
-    const cronometroTexto = document.getElementById('cronometro-texto')
-    const inputProjeto = document.getElementById('input-projeto')
-    let secaoComplementar = null
-    let intervalo = null
-
-    objInteragido.addEventListener('click', (e) => {
-        let objetoClicado = document.getElementById(e.target.id)
-
-        if (objetoClicado)
+    console.log(objetoClicado)
+    
+    if (forma === 'texto')
+    {
+        switch (uso) 
         {
-            let objetoClicadoBaseId = objetoClicado.id.split('-')[1]
+            case 'play':
+                // Botao de play vira pause
+                objetoClicado.classList.remove('btn-success')
+                objetoClicado.classList.add('btn-secondary')
+                objetoClicado.textContent = 'pausar'
+
+                objetoClicado.setAttribute('id', 'botao-pause-texto')
+
+                intervalo = setInterval(passaTempo, SEGUNDO)
+                break
             
-            switch (objetoClicadoBaseId) 
+            case 'pause':
+                clearInterval(intervalo)
+                
+                objetoClicado.classList.remove('btn-secondary')
+                objetoClicado.classList.add('btn-success')
+                
+                objetoClicado.textContent = 'retomar'
+                
+                objetoClicado.setAttribute('id', 'botao-play-texto')
+
+                break
+
+            case 'stop':
+                // Captura as informacoes de interesse
+                cardObj.tituloAtividade = inputProjeto.value
+                cardObj.tempoDespendido = cronometroTexto.textContent
+
+                console.log(cardObj.tituloAtividade)
+                console.log(cardObj.tempoDespendido)
+                
+                // Limpeza do cronometro
+                clearInterval(intervalo)
+                cronometroTexto.innerText = '00:00:00'    
+                tempo.horas = 0
+                tempo.minutos = 0
+                tempo.segundos = 0
+                
+                // Restaura o cronometro para configuracoes originais
+                botaoPlayTexto.setAttribute('id', 'botao-play-texto')
+                botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                botaoPlayTexto.classList.remove('btn-secondary')
+                botaoPlayTexto.classList.add('btn-success')
+                botaoPlayTexto.textContent = 'iniciar'
+                botaoPlayIcone.classList.remove('btn-secondary')
+                botaoPlayIcone.classList.add('btn-success')
+                botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                inputProjeto.value = ''
+                
+                console.log('flag 1')
+
+                secaoComplementar = capturaInfoComplementar()
+                
+                boolCriarCard = eventosSecaoComplementar(secaoComplementar)
+
+                console.log('flag 5')
+
+                console.log(boolCriarCard)
+
+                if (boolCriarCard)
+                {
+                    console.log('flag 6')
+                    criarCard()
+                }
+                    
+
+                break
+        }
+    }
+    else
+    {
+        switch (uso) 
+        {
+            case 'play':
+                // Botao de play vira pause
+                objetoClicado.classList.remove('btn-success')
+                objetoClicado.classList.add('btn-secondary')
+                objetoClicado.innerHTML = '<i class="bi bi-pause-fill"></i>'
+                
+                objetoClicado.setAttribute('id', 'botao-pause-icone')
+
+                intervalo = setInterval(passaTempo, SEGUNDO)
+                break
+            
+            case 'pause':
+                clearInterval(intervalo)
+
+                objetoClicado.classList.remove('btn-secondary')
+                objetoClicado.classList.add('btn-success')
+                objetoClicado.innerHTML = '<i class="bi bi-play-fill"></i>'
+
+                objetoClicado.setAttribute('id', 'botao-play-icone')
+                break
+
+            case 'stop':
+                
+        }
+    }
+
+    
+}
+
+function execucaoEventosCronometro (evt)
+{
+    const FORMATO_BOTAO = 2
+    const ACAO_BOTAO = 1
+    let objetoClicado = evt.target.id.split('-')
+    let botaoClicado = evt.target
+    let inputProjeto = document.getElementById('input-projeto')
+
+    switch (objetoClicado[FORMATO_BOTAO]) 
+    {
+        case 'texto':
+            switch (objetoClicado[ACAO_BOTAO]) 
             {
                 case 'play':
                     // Botao de play vira pause
-                    botaoPlayTexto.classList.remove('btn-success')
-                    botaoPlayTexto.classList.add('btn-secondary')
-                    botaoPlayTexto.textContent = 'pausar'
-
-                    botaoPlayIcone.classList.remove('btn-success')
-                    botaoPlayIcone.classList.add('btn-secondary')
-                    botaoPlayIcone.innerHTML = '<i class="bi bi-pause-fill"></i>'
-
-                    botaoPlayTexto.setAttribute('id', 'botao-pause-texto')
-                    botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
-
+                    botaoClicado.classList.remove('btn-success')
+                    botaoClicado.classList.add('btn-secondary')
+                    botaoClicado.textContent = 'pausar'
+                    botaoClicado.setAttribute('id', 'botao-pause-texto')
                     intervalo = setInterval(passaTempo, SEGUNDO)
-                    console.log('acao do botao play')
-                    break
-                
+                    break;
+
                 case 'pause':
                     clearInterval(intervalo)
-                    
-                    botaoPlayTexto.classList.remove('btn-secondary')
-                    botaoPlayTexto.classList.add('btn-success')
-                    
-                    botaoPlayTexto.textContent = 'retomar'
-
-                    botaoPlayIcone.classList.remove('btn-secondary')
-                    botaoPlayIcone.classList.add('btn-success')
-                    botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
-                    
-                    botaoPlayTexto.setAttribute('id', 'botao-play-texto')
-                    botaoPlayIcone.setAttribute('id', 'botao-play-icone')
-                    console.log('acao do botao pause')
-                    break
+                    botaoClicado.classList.remove('btn-secondary')
+                    botaoClicado.classList.add('btn-success')
+                    botaoClicado.textContent = 'retomar'
+                    botaoClicado.setAttribute('id', 'botao-play-texto')
+                    break;
 
                 case 'stop':
                     // Captura as informacoes de interesse
                     cardObj.tituloAtividade = inputProjeto.value
                     cardObj.tempoDespendido = cronometroTexto.textContent
-
-                    console.log(cardObj.tituloAtividade)
-                    console.log(cardObj.tempoDespendido)
                     
                     // Limpeza do cronometro
                     clearInterval(intervalo)
@@ -338,24 +433,99 @@ function eventosSecaoCronometro (objInteragido)
                     tempo.segundos = 0
                     
                     // Restaura o cronometro para configuracoes originais
-                    botaoPlayTexto.setAttribute('id', 'botao-play-texto')
-                    botaoPlayIcone.setAttribute('id', 'botao-play-icone')
-                    botaoPlayTexto.classList.remove('btn-secondary')
-                    botaoPlayTexto.classList.add('btn-success')
-                    botaoPlayTexto.textContent = 'iniciar'
-                    botaoPlayIcone.classList.remove('btn-secondary')
-                    botaoPlayIcone.classList.add('btn-success')
-                    botaoPlayIcone.innerHTML = '<i class="bi bi-play-fill"></i>'
+                    botaoClicado.setAttribute('id', 'botao-play-texto')
+                    botaoClicado.classList.remove('btn-secondary')
+                    botaoClicado.classList.add('btn-success')
+                    botaoClicado.textContent = 'iniciar'
                     inputProjeto.value = ''
-                    
-                    secaoComplementar = capturaInfoComplementar()
 
-                    criarCard()
+                    secaoComplementar = capturaInfoComplementar()
+                    
+                    boolCriarCard = eventosSecaoComplementar(secaoComplementar)
+
+                    console.log('flag 5')
+
+                    console.log(boolCriarCard)
+
+                    if (boolCriarCard)
+                    {
+                        console.log('flag 6')
+                        criarCard()
+                    }
+                    console.log('stop')
+                    break;
+
+                default:
+                    console.log('Comportamento não esperado!')
+                    break;
             }
-        }  
-    })
+            break;
+
+        case 'icone':
+            switch (objetoClicado[ACAO_BOTAO]) 
+            {
+                case 'play':
+                    // Botao de play vira pause
+                    if (botaoClicado.nodeName === 'I')
+                        botaoClicado = document.getElementById('botao-play-icone')
+
+                    botaoClicado.classList.remove('btn-success')
+                    botaoClicado.classList.add('btn-secondary')
+                    botaoClicado.innerHTML = '<i id="i-pause-icone" class="bi bi-pause-fill"></i>'
+                    botaoClicado.setAttribute('id', 'botao-pause-icone')
+                    intervalo = setInterval(passaTempo, SEGUNDO)
+                    break
+
+                case 'pause':
+                    clearInterval(intervalo)
+                    if (botaoClicado.nodeName === 'I')
+                        botaoClicado = document.getElementById('botao-pause-icone')
+
+                    botaoClicado.classList.remove('btn-secondary')
+                    botaoClicado.classList.add('btn-success')
+                    botaoClicado.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
+                    botaoClicado.setAttribute('id', 'botao-play-icone')
+                    break
+
+                case 'stop':
+                    // Captura as informacoes de interesse
+                    cardObj.tituloAtividade = inputProjeto.value
+                    cardObj.tempoDespendido = cronometroTexto.textContent
+                    
+                    // Limpeza do cronometro
+                    clearInterval(intervalo)
+                    cronometroTexto.innerText = '00:00:00'    
+                    tempo.horas = 0
+                    tempo.minutos = 0
+                    tempo.segundos = 0    
+                    
+                    // Restaura o cronometro para configuracoes originais
+                    botaoClicado.setAttribute('id', 'botao-play-icone')
+                    botaoClicado.classList.remove('btn-secondary')
+                    botaoClicado.classList.add('btn-success')
+                    botaoClicado.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
+                    inputProjeto.value = ''
+                    secaoComplementar = capturaInfoComplementar()
+                    boolCriarCard = eventosSecaoComplementar(secaoComplementar)
+                    break;
+
+                default:
+                    console.log('default')
+                    break;
+            }
+            break;
+    
+        default:
+            console.log('Não foi possível identificar o formato.')
+            break;
+    }
 }
+
+// if (objetoClicado)
+//     alteraEstadoBotao(objetoClicado.id.split('-')[1], objetoClicado.id.split('-')[2], objetoClicado) // uso - forma (ex: play - texto)
+
 
 // Verifica se a página está pronta para ser manipulada
 let sectionCronometro = criarSecaoCronometro()
-eventosSecaoCronometro(sectionCronometro)
+// inicializaEventos()
+sectionCronometro.addEventListener('click', evt => execucaoEventosCronometro(evt))
