@@ -290,55 +290,47 @@ function criarSecaoCronometro ()
 
 function execucaoEventosCronometro (evt)
 {
-    console.log('execucaoEventosCronometroDois')
-    
-    const FORMATO_BOTAO = 2
     const ACAO_BOTAO = 1
 
     // Esses já existem antes
+    let botaoPauseIcone = document.getElementById('botao-pause-icone')
+    let botaoPauseTexto = document.getElementById('botao-pause-texto')
     let botaoPlayTexto = document.getElementById('botao-play-texto')
     let botaoPlayIcone = document.getElementById('botao-play-icone')
-    let botaoStopTexto = document.getElementById('botao-stop-texto')
-    let botaoStopIcone = document.getElementById('botao-stop-icone')
-
+    
     let objetoClicado = evt.target.id.split('-')
     let inputProjeto = document.getElementById('input-projeto')
     let cronometroTexto = document.getElementById('cronometro-texto')
 
-    console.log(objetoClicado[ACAO_BOTAO])
-
     switch (objetoClicado[ACAO_BOTAO]) 
     {
+        // Botão play vira pause
         case 'play':
-            
-            // Botao de play vira pause
+            // Caso botão texto
             botaoPlayTexto.classList.remove('btn-success')
             botaoPlayTexto.classList.add('btn-secondary')
             botaoPlayTexto.textContent = 'pausar'
             botaoPlayTexto.setAttribute('id', 'botao-pause-texto')
             intervalo = setInterval(passaTempo, SEGUNDO)
-            
-            // // Para icone
-            // if (botaoClicado.nodeName === 'I')
-            //     botaoPlayIcone = document.getElementById('botao-play-icone')
+
+            // Caso botão icone
             botaoPlayIcone.classList.remove('btn-success')
             botaoPlayIcone.classList.add('btn-secondary')
             botaoPlayIcone.innerHTML = '<i id="i-pause-icone" class="bi bi-pause-fill"></i>'
             botaoPlayIcone.setAttribute('id', 'botao-pause-icone')
             break;
 
+        // Carga do botão pause só existe no ato do click
         case 'pause':
             clearInterval(intervalo)    
-            let botaoPauseIcone = document.getElementById('botao-pause-icone')
-            let botaoPauseTexto = document.getElementById('botao-pause-texto')
             
             // Botão pause vira play
-            botaoPauseTexto.classList.remove('btn-secondary') 
+            botaoPauseTexto.classList.remove('btn-secondary')
             botaoPauseTexto.classList.add('btn-success')
             botaoPauseTexto.textContent = 'retomar'
             botaoPauseTexto.setAttribute('id', 'botao-play-texto')
 
-            botaoPauseIcone.classList.remove('btn-secondary') 
+            botaoPauseIcone.classList.remove('btn-secondary')
             botaoPauseIcone.classList.add('btn-success')
             botaoPauseIcone.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
             botaoPauseIcone.setAttribute('id', 'botao-play-icone')
@@ -358,16 +350,31 @@ function execucaoEventosCronometro (evt)
             tempo.segundos = 0
             
             // Restaura o cronometro para configuracoes originais
+            if (botaoPlayTexto || botaoPlayIcone)
+            {
+                botaoPlayTexto.setAttribute('id', 'botao-play-texto')
+                botaoPlayTexto.classList.remove('btn-secondary')
+                botaoPlayTexto.classList.add('btn-success')
+                botaoPlayTexto.textContent = 'iniciar'
+                
+                botaoPlayIcone.setAttribute('id', 'botao-play-icone')
+                botaoPlayIcone.classList.remove('btn-secondary')
+                botaoPlayIcone.classList.add('btn-success')
+                botaoPlayIcone.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
+            }
 
-            botaoPlayTexto.setAttribute('id', 'botao-play-texto')
-            botaoPlayTexto.classList.remove('btn-secondary')
-            botaoPlayTexto.classList.add('btn-success')
-            botaoPlayTexto.textContent = 'iniciar'
-            
-            botaoPlayIcone.setAttribute('id', 'botao-play-icone')
-            botaoPlayIcone.classList.remove('btn-secondary')
-            botaoPlayIcone.classList.add('btn-success')
-            botaoPlayIcone.innerHTML = '<i id="i-pause-icone" class="bi bi-pause-fill"></i>'
+            if (botaoPauseTexto || botaoPauseIcone)
+            {
+                botaoPauseTexto.setAttribute('id', 'botao-play-texto')
+                botaoPauseTexto.classList.remove('btn-secondary')
+                botaoPauseTexto.classList.add('btn-success')
+                botaoPauseTexto.textContent = 'iniciar'
+
+                botaoPauseIcone.setAttribute('id', 'botao-play-texto')
+                botaoPauseIcone.classList.remove('btn-secondary')
+                botaoPauseIcone.classList.add('btn-success')
+                botaoPauseIcone.innerHTML = '<i id="i-play-icone" class="bi bi-play-fill"></i>'
+            }
 
             secaoComplementar = capturaInfoComplementar()
             eventosSecaoComplementar(secaoComplementar)
@@ -378,12 +385,7 @@ function execucaoEventosCronometro (evt)
             console.log('Comportamento não esperado!')
             break;
     }
-
-
 }
 
-// Verifica se a página está pronta para ser manipulada
 let sectionCronometro = criarSecaoCronometro()
-// inicializaEventos()
-console.log('flag 1')
 sectionCronometro.addEventListener('click', evt => execucaoEventosCronometro(evt))
